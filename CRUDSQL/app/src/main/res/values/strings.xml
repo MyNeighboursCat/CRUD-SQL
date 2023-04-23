@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Colin Walters.  All rights reserved.
+  -->
+
+<resources>
+    <string name="app_name">CRUD SQL</string>
+    <string name="help_text">Getting Started:\nCreate a database (tap either the menu button or the action bar overflow icon, Database | New).\nEnter a SQL statement or statements in the SQL input text view (type free-format or tap the keywords or template icon).\nTap the floating action button (FAB) to execute the SQL statement(s).\nThe SQL output is displayed in the SQL result text view.\n\nOther Features:\nClear the SQL input and result text views by tapping the clear icon.\nUse the Custom Insert option to store your own frequently used keywords or templates.  Make sure you enter the text you want to store first in the SQL input text view then use the Custom Insert | New option to enter a name for your keyword or template.  Use the Custom Insert | Select option to add the stored keyword or template to the SQL input text view in the future.  Custom insert keywords and templates can be renamed and deleted using the appropriate custom insert option.\nAs well as being created, databases can also be selected, renamed and deleted through the appropriate database option in the database menu.\nShow the recent history of the executed SQL commands through the History option.  Selecting the history item inserts it into the SQL input text view.  The Clear History option wipes the stored executed SQL commands from memory.\n\nForeign key support is switched off in Android by default.  This app turns on foreign key support by default every time a database is created or selected through the command ‘PRAGMA foreign_keys = ON;’.  If you don’t want foreign key support on, turn it off by executing the SQL statement ’PRAGMA foreign_keys = OFF;’.  With foreign key support off, foreign key constraint checking is not enforced.\n\nSQLite is in autocommit mode by default which means each SQL statement is committed after it is executed.  Executing the ‘BEGIN TRANSACTION;’ statement switches autocommit off.  Autocommit mode is switched back on when a ‘COMMIT;’ or ‘ROLLBACK;’ command is executed.  Leaving the main screen whilst in a transaction i.e. after a ‘BEGIN TRANSACTION;’ command, will result in the transaction being rolled back automatically.  This includes rotating the screen.  It is important to note that savepoints are supported by SQLite but not by JDBC so SAVEPOINT and associated commands do not work.\n\nI take no responsibility for the content of the following website pages.\nSQLite Website Pages:\nHome Page: http://www.sqlite.org\nKeywords: http://www.sqlite.org/lang_keywords.html\nData Types: http://www.sqlite.org/datatype3.html\nForeign Key Support: http://www.sqlite.org/foreignkeys.html\nSyntax Diagrams: http://www.sqlite.org/syntaxdiagrams.html\nCore Functions: http://www.sqlite.org/lang_corefunc.html\nDate and Time Functions: http://www.sqlite.org/lang_datefunc.html\nAggregate Functions: http://www.sqlite.org/lang_aggfunc.html\nTransaction Control: http://www.sqlite.org/lockingv3.html#transaction_control\nKeyword Index: http://www.sqlite.org/keyword_index.html\nOmitted Features: http://www.sqlite.org/omitted.html</string>
+    <string name="help">Help</string>
+    <string name="application_version_name">1.0</string>
+    <string name="version">Version</string>
+    <string name="copyright">Copyright ©</string>
+    <string name="my_name">Colin Walters</string>
+    <string name="all_rights_reserved">All rights reserved.</string>
+    <string name="about">About</string>
+    <string name="creation_year">2023</string>
+    <string name="rate">Rate</string>
+    <string name="sql_input">SQL Input: </string>
+    <string name="sql_result">SQL Result: </string>
+    <string name="create_row">Create Row</string>
+    <string name="full_select_rows">Full Select Rows</string>
+    <string name="update_rows">Update Rows</string>
+    <string name="delete_rows">Delete Rows</string>
+    <string name="subquery_rows">Subquery Rows</string>
+    <string name="create_table">Create Table</string>
+    <string name="show_tables">Show Tables</string>
+    <string name="templates">Templates</string>
+    <string name="clear">Clear</string>
+    <string name="keywords">Keywords</string>
+    <string name="select_capitals">SELECT</string>
+    <string name="semicolon">;</string>
+    <string name="template_select_table_rows">
+        SELECT *\nFROM table_1;
+    </string>
+    <string name="template_full_select_rows">
+        SELECT column_1 c1, column_2 c2\nFROM table_1\nWHERE column_1 = \'text 1\'\nGROUP BY column_2\nHAVING COUNT(*) > 1\nORDER BY column_2;
+    </string>
+    <string name="template_select_inner_join_rows">
+        SELECT t1.column_1 c1, t2.column_4 c2\nFROM table_1 t1 INNER JOIN table_2 t2 ON t1._id = t2.table_1_id\nWHERE c1 = \'text 1\'\nGROUP BY c1, c2\nHAVING COUNT(*) > 1\nORDER BY c1;
+    </string>
+    <string name="template_show_tables">
+        SELECT name\nFROM sqlite_master\nWHERE type = \'table\' AND name != \'android_metadata\'\nORDER BY name;
+    </string>
+    <string name="template_create_row">
+        INSERT INTO table_1(column_1, column_2, column_3)\nVALUES(\'text 1\', 10, 2.5);
+    </string>
+    <string name="template_update_rows">
+        UPDATE table_1\nSET column_1 = \'text 2\'\nWHERE column_1 = \'text 1\';
+    </string>
+    <string name="template_delete_rows">
+        DELETE FROM table_1\nWHERE column_1 = \'text 1\';
+    </string>
+    <string name="template_searched_case_expression">
+        SELECT (CASE\nWHEN column_1 = \'text 1\' THEN \'true\'\nELSE \'false\'\nEND) result\nFROM table_1;
+    </string>
+    <string name="template_simple_case_expression">
+        SELECT (CASE column_1\nWHEN \'text 1\' THEN \'true\'\nELSE \'false\'\nEND) result\nFROM table_1;
+    </string>
+    <string name="template_subquery">
+        SELECT *\nFROM table_1\nWHERE _id IN (SELECT _id\nFROM table_1\nWHERE column_1 = \'text 1\');
+    </string>
+    <string name="template_create_table">
+        CREATE TABLE table_1(\n_id INTEGER PRIMARY KEY,\ncolumn_1 TEXT,\ncolumn_2 INTEGER,\ncolumn_3 REAL);
+    </string>
+    <string name="template_create_tables">
+        PRAGMA foreign_keys = ON;\n\nCREATE TABLE table_1(\n_id INTEGER PRIMARY KEY,\ncolumn_1 TEXT,\ncolumn_2 INTEGER,\ncolumn_3 REAL);\n\nCREATE TABLE table_2(\n_id INTEGER PRIMARY KEY,\ncolumn_4 TEXT,\ncolumn_5 INTEGER,\ncolumn_6 REAL,\ntable_1_id INTEGER NOT NULL,\nCONSTRAINT fk_table_1_id FOREIGN KEY(table_1_id) REFERENCES table_1(_id));
+    </string>
+    <string name="template_create_index">
+        <!--WHERE CLAUSE (PARTIAL INDEX) ONLY SUPPORTED FROM SQLITE VERSION 3.8.0-->
+        CREATE INDEX index_1 ON table_1(column_1);
+    </string>
+    <string name="template_index_used">
+        EXPLAIN QUERY PLAN\nSELECT *\nFROM table_1\nWHERE column_1 = \'text 1\';
+    </string>
+    <string name="template_rename_table">
+        ALTER TABLE table_1 RENAME TO table_3;
+    </string>
+    <string name="template_add_column">
+        ALTER TABLE table_1 ADD COLUMN column_4 TEXT;
+    </string>
+    <string name="template_create_view">
+        CREATE VIEW view_1 AS\nSELECT *\nFROM table_1\nWHERE column_1 = \'text 1\';
+    </string>
+    <string name="template_attach_detach_database_part_1">
+        ATTACH DATABASE \'/data/data/com.crudsql/databases/database_2
+    </string>
+    <string name="template_attach_detach_database_part_2">
+        \' AS database_2;\nSELECT *\nFROM database_2.table_1\nWHERE column_1 = \'text 1\';\nDETACH DATABASE database_2;
+    </string>
+    <!--JDBC does not support save points even though SQLite does-->
+    <!--<string name="template_transaction">
+        BEGIN TRANSACTION;\nSAVEPOINT savepoint_1;\nRELEASE SAVEPOINT savepoint_1;\nROLLBACK;\nROLLBACK TRANSACTION TO SAVEPOINT savepoint_1;\nCOMMIT;
+    </string>-->
+    <string name="template_transaction">
+        BEGIN TRANSACTION;\nROLLBACK;\nCOMMIT;
+    </string>
+    <string name="template_trigger">
+        CREATE TRIGGER trigger_1\nAFTER UPDATE OF column_1 ON table_1\nBEGIN\n\tUPDATE table_1\n\tSET column_3 = 100.0\n\tWHERE _id = NEW._id;\nEND;
+    </string>
+    <string name="query_ok">Query OK</string>
+    <string name="affected">affected</string>
+    <string name="row">row</string>
+    <string name="rows">rows</string>
+    <string name="in_set">in set</string>
+    <string name="history">History</string>
+    <string name="clear_history">Clear History</string>
+    <string name="history_cleared">History Cleared</string>
+    <string name="history_is_empty">History is empty</string>
+    <string name="database">Database</string>
+    <string name="select">Select</string>
+    <string name="new_string">New</string>
+    <string name="rename">Rename</string>
+    <string name="delete">Delete</string>
+    <string name="database_label">Database: </string>
+    <string name="no_databases">No Databases</string>
+    <string name="database_already_exists">Database Already Exists</string>
+    <string name="database_selected">Database Selected</string>
+    <string name="new_database_created">New Database Created</string>
+    <string name="database_renamed">Database Renamed</string>
+    <string name="database_deleted">Database Deleted</string>
+    <string name="database_action_failed">Database Action Failed</string>
+    <string name="existing_database_access_denied">Existing Database Access Denied</string>
+    <string name="database_rename_failed">Database Rename Failed</string>
+    <string name="database_access_denied">Database Access Denied</string>
+    <string name="database_deletion_failed">Database Deletion Failed</string>
+    <string name="create_or_select_a_database">Either create a database using the Database | New option or select a database using the Database | Select option.</string>
+    <string name="from">From: </string>
+    <string name="to">To: </string>
+    <string name="no_semicolon">No semicolon</string>
+    <string name="last_character_must_be_a_semicolon">Last character must be a semicolon</string>
+    <string name="no_sql_statement_to_execute">No SQL statement to execute</string>
+    <string name="keyword_inserted">Keyword Selected</string>
+    <string name="keywords_group">Keywords Group:</string>
+    <string name="keyword_to_insert">Keyword to insert:</string>
+    <string name="keyword_insertion_failed">Keyword Insertion Failed</string>
+    <string name="custom_insert">Custom Insert</string>
+    <string name="no_custom_inserts">No Custom Inserts</string>
+    <string name="custom_insert_action_failed">Custom Insert Action Failed</string>
+    <string name="custom_insert_selected">Custom Insert Selected</string>
+    <string name="new_custom_insert_created">New Custom Insert Created</string>
+    <string name="custom_insert_renamed">Custom Insert Renamed</string>
+    <string name="custom_insert_deleted">Custom Insert Deleted</string>
+    <string name="custom_insert_already_exists">Custom Insert Already Exists</string>
+    <string name="custom_insert_rename_failed">Custom Insert Rename Failed</string>
+    <string name="custom_insert_deletion_failed">Custom Insert Deletion Failed</string>
+    <string name="create_tables">Create Tables</string>
+    <string name="text_cannot_be_blank">Text Cannot Be Blank</string>
+    <string name="rename_table">Rename Table</string>
+    <string name="add_column">Add Column</string>
+    <string name="create_index">Create Index</string>
+    <string name="index_used">Index Used</string>
+    <string name="create_view">Create View</string>
+    <string name="attach_detach_database">Attach Detach Database</string>
+    <string name="searched_case_expression">Searched Case Expression</string>
+    <string name="simple_case_expression">Simple Case Expression</string>
+    <string name="transaction">Transaction</string>
+    <string name="opened">opened</string>
+    <string name="select_table_rows">Select Table Rows</string>
+    <string name="select_inner_join_rows">Select Inner Join Rows</string>
+    <string name="trigger">Trigger</string>
+    <string name="create">CREATE</string>
+    <string name="trigger_capitals">TRIGGER</string>
+    <string name="foreign_keys_on">PRAGMA foreign_keys = ON;</string>
+    <string name="rollback">ROLLBACK</string>
+    <string name="commit">COMMIT</string>
+    <string name="insert">INSERT</string>
+    <string name="update">UPDATE</string>
+    <string name="delete_capitals">DELETE</string>
+    <string name="null_text">null</string>
+    <string name="unsupported_data_type">Unsupported Data Type</string>
+    <string name="begin">BEGIN</string>
+    <string name="transaction_capitals">TRANSACTION</string>
+    <string name="nested_transactions">Cannot start a transaction within a transaction</string>
+    <string name="view">VIEW</string>
+    <string-array name="action_keyword_list">
+        <item>Create Table</item>
+        <item>Create Index</item>
+        <item>Alter Table</item>
+        <item>Insert Rows</item>
+        <item>Update Rows</item>
+        <item>Delete Rows</item>
+        <item>Query</item>
+        <item>Filter</item>
+        <item>Symbols</item>
+        <item>Generic Functions</item>
+        <item>Sqlite Core Functions</item>
+        <item>Sqlite Date and Time Functions</item>
+        <item>Sqlite Aggregate Functions</item>
+        <item>Transactions</item>
+        <item>Triggers</item>
+        <item>Create View</item>
+        <item>Database</item>
+        <item>Drop</item>
+        <item>Create Virtual Table</item>
+        <item>Miscellaneous</item>
+    </string-array>
+    <string-array name="action_keyword_list_column">
+        <!--don't put Select Keyword here-->
+        <item>_id</item>
+        <item>INTEGER</item>
+        <item>REAL</item>
+        <item>TEXT</item>
+        <item>BLOB</item>
+        <item>NONE</item>
+        <item>CONSTRAINT</item>
+        <item>PRIMARY KEY</item>
+        <item>ASC</item>
+        <item>DESC</item>
+        <item>NOT NULL</item>
+        <item>UNIQUE</item>
+        <item>ON CONFLICT</item>
+        <item>ROLLBACK</item>
+        <item>ABORT</item>
+        <item>FAIL</item>
+        <item>IGNORE</item>
+        <item>REPLACE</item>
+        <!--in sqlite, AUTO_INCREMENT is AUTOINCREMENT-->
+        <item>AUTOINCREMENT</item>
+        <item>CHECK</item>
+        <item>DEFAULT</item>
+        <item>COLLATE</item>
+        <item>FOREIGN KEY</item>
+        <item>REFERENCES</item>
+        <item>ON</item>
+        <item>DELETE</item>
+        <item>SET</item>
+        <item>NULL</item>
+        <item>DEFAULT</item>
+        <item>CASCADE</item>
+        <item>RESTRICT</item>
+        <item>NO ACTION</item>
+        <item>MATCH</item>
+        <item>NOT</item>
+        <item>DEFERRABLE</item>
+        <item>INITIALLY</item>
+        <item>DEFERRED</item>
+        <item>IMMEDIATE</item>
+    </string-array>
+    <string-array name="action_keyword_list_create_table_1">
+        <item>Select Keyword</item>
+        <item>CREATE</item>
+        <item>TEMP</item>
+        <item>TEMPORARY</item>
+        <item>TABLE</item>
+        <item>IF NOT EXISTS</item>
+    </string-array>
+    <string-array name="action_keyword_list_create_table_2">
+        <!--don't put Select Keyword here-->
+        <item>WITHOUT ROWID</item>
+        <item>AS</item>
+    </string-array>
+    <string-array name="action_keyword_list_create_index">
+        <item>Select Keyword</item>
+        <item>CREATE</item>
+        <item>UNIQUE</item>
+        <item>INDEX</item>
+        <item>IF NOT EXISTS</item>
+        <item>ON</item>
+        <item>COLLATE</item>
+        <item>ASC</item>
+        <item>DESC</item>
+        <item>WHERE</item>
+    </string-array>
+    <string-array name="action_keyword_list_alter_table">
+        <item>Select Keyword</item>
+        <item>ALTER TABLE</item>
+        <item>RENAME TO</item>
+        <item>ADD</item>
+        <item>COLUMN</item>
+    </string-array>
+    <string-array name="action_keyword_list_insert_rows">
+        <item>Select Keyword</item>
+        <item>WITH</item>
+        <item>RECURSIVE</item>
+        <item>AS</item>
+        <item>INSERT INTO</item>
+        <item>REPLACE INTO</item>
+        <item>INSERT OR REPLACE INTO</item>
+        <item>INSERT OR ROLLBACK INTO</item>
+        <item>INSERT OR ABORT INTO</item>
+        <item>INSERT OR FAIL INTO</item>
+        <item>INSERT OR IGNORE INTO</item>
+        <item>VALUES</item>
+        <item>DEFAULT VALUES</item>
+    </string-array>
+    <string-array name="action_keyword_list_update_rows">
+        <item>Select Keyword</item>
+        <item>WITH</item>
+        <item>RECURSIVE</item>
+        <item>AS</item>
+        <item>UPDATE</item>
+        <item>UPDATE OR ROLLBACK</item>
+        <item>UPDATE OR ABORT</item>
+        <item>UPDATE OR REPLACE</item>
+        <item>UPDATE OR FAIL</item>
+        <item>UPDATE OR IGNORE</item>
+        <item>INDEXED BY</item>
+        <item>NOT INDEXED</item>
+        <item>SET</item>
+        <item>WHERE</item>
+        <item>ORDER BY</item>
+        <item>LIMIT</item>
+        <item>OFFSET</item>
+    </string-array>
+    <string-array name="action_keyword_list_delete_rows">
+        <item>Select Keyword</item>
+        <item>WITH</item>
+        <item>RECURSIVE</item>
+        <item>AS</item>
+        <item>DELETE FROM</item>
+        <item>INDEXED BY</item>
+        <item>NOT INDEXED</item>
+        <item>WHERE</item>
+        <item>ORDER BY</item>
+        <item>LIMIT</item>
+        <item>OFFSET</item>
+    </string-array>
+    <string-array name="action_keyword_list_query">
+        <item>Select Keyword</item>
+        <item>WITH</item>
+        <item>RECURSIVE</item>
+        <item>AS</item>
+        <item>VALUES</item>
+        <item>SELECT</item>
+        <item>DISTINCT</item>
+        <item>ALL</item>
+        <item>AS</item>
+        <item>FROM</item>
+        <item>NATURAL</item>
+        <item>LEFT</item>
+        <item>RIGHT</item>
+        <item>OUTER</item>
+        <item>INNER</item>
+        <item>CROSS</item>
+        <item>FULL</item>
+        <item>JOIN</item>
+        <item>ON</item>
+        <item>USING</item>
+        <item>WHERE</item>
+        <item>GROUP BY</item>
+        <item>HAVING</item>
+        <item>UNION</item>
+        <item>UNION ALL</item>
+        <item>INTERSECT</item>
+        <item>EXCEPT</item>
+        <item>ORDER BY</item>
+        <item>COLLATE</item>
+        <item>ASC</item>
+        <item>DESC</item>
+        <item>LIMIT</item>
+        <item>OFFSET</item>
+    </string-array>
+    <string-array name="action_keyword_list_filter">
+        <item>Select Keyword</item>
+        <item>AND</item>
+        <item>OR</item>
+        <item>NOT</item>
+        <item>IS</item>
+        <item>NULL</item>
+        <item>ISNULL</item>
+        <item>NOTNULL</item>
+        <item>LIKE</item>
+        <item>GLOB</item>
+        <item>ESCAPE</item>
+        <item>IN</item>
+        <item>BETWEEN</item>
+        <item>IF</item>
+        <item>EXISTS</item>
+        <item>CASE</item>
+        <item>WHEN</item>
+        <item>THEN</item>
+        <item>ELSE</item>
+        <item>END</item>
+        <item>REGEXP</item>
+    </string-array>
+    <string-array name="action_keyword_list_symbols">
+        <item>Select Keyword</item>
+        <item>()</item>
+        <item>\'\'</item>
+        <item>\"\"</item>
+        <item>,</item>
+        <item>;</item>
+        <item>=</item>
+        <item>==</item>
+        <item>!=</item>
+        <item>&lt;&gt;</item>
+        <item>&lt;</item>
+        <item>&gt;</item>
+        <item>&lt;=</item>
+        <item>&gt;=</item>
+        <item>+</item>
+        <item>-</item>
+        <item>*</item>
+        <item>/</item>
+        <item>_</item>
+        <item>%</item>
+        <item>[]</item>
+        <item>||</item>
+        <item>&lt;&lt;</item>
+        <item>&gt;&gt;</item>
+        <item>^</item>
+        <item>&amp;</item>
+        <item>|</item>
+        <item>--</item>
+        <item>/**/</item>
+    </string-array>
+    <string-array name="action_keyword_list_generic_functions">
+        <item>Select Keyword</item>
+        <item>CAST()</item>
+        <item>LOWER()</item>
+        <item>UPPER()</item>
+        <item>COUNT()</item>
+        <item>MIN()</item>
+        <item>MAX()</item>
+        <item>AVG()</item>
+        <item>SUM()</item>
+        <item>CURRENT_DATE</item>
+        <item>CURRENT_TIME</item>
+        <item>CURRENT_TIMESTAMP</item>
+    </string-array>
+    <string-array name="action_keyword_list_sqlite_core_functions">
+        <item>Select Keyword</item>
+        <item>abs()</item>
+        <item>changes()</item>
+        <item>coalesce()</item>
+        <item>glob()</item>
+        <item>ifnull()</item>
+        <item>hex()</item>
+        <item>last_insert_rowid()</item>
+        <item>length()</item>
+        <item>like()</item>
+        <item>likely()</item>
+        <item>lower()</item>
+        <item>ltrim()</item>
+        <item>max()</item>
+        <item>min()</item>
+        <item>nullif()</item>
+        <item>quote()</item>
+        <item>random()</item>
+        <item>randomblob()</item>
+        <item>replace()</item>
+        <item>round()</item>
+        <item>rtrim()</item>
+        <item>sqlite_source_id()</item>
+        <item>sqlite_version()</item>
+        <item>substr()</item>
+        <item>total_changes()</item>
+        <item>trim()</item>
+        <item>typeof()</item>
+        <item>upper()</item>
+        <item>zeroblob()</item>
+        <!--not in Android
+        <item>char()</item>
+        <item>instr()</item>
+        <item>likelihood()</item>
+        <item>load_extension()</item>
+        <item>printf()</item>
+        <item>soundex()</item>
+        <item>sqlite_compileoption_get()</item>
+        <item>sqlite_compileoption_used()</item>
+        <item>unlikely()</item>
+        <item>unicode()</item>
+        -->
+    </string-array>
+    <string-array name="action_keyword_list_sqlite_date_and_time_functions">
+        <item>Select Keyword</item>
+        <item>date()</item>
+        <item>time()</item>
+        <item>datetime()</item>
+        <item>julianday()</item>
+        <item>strftime()</item>
+    </string-array>
+    <string-array name="action_keyword_list_sqlite_aggregate_functions">
+        <item>Select Keyword</item>
+        <item>avg()</item>
+        <item>count()</item>
+        <item>group_concat()</item>
+        <item>max()</item>
+        <item>min()</item>
+        <item>sum()</item>
+        <item>total()</item>
+        <item>DISTINCT</item>
+    </string-array>
+    <string-array name="action_keyword_list_transactions">
+        <!--JDBC does not support save points even though SQLite does-->
+        <item>Select Keyword</item>
+        <item>BEGIN</item>
+        <item>DEFERRED</item>
+        <item>IMMEDIATE</item>
+        <item>EXCLUSIVE</item>
+        <item>TRANSACTION</item>
+        <!--<item>SAVEPOINT</item>-->
+        <item>COMMIT</item>
+        <item>END TRANSACTION</item>
+        <item>ROLLBACK</item>
+        <!--<item>TO</item>-->
+        <!--<item>RELEASE</item>-->
+    </string-array>
+    <string-array name="action_keyword_list_triggers">
+        <item>Select Keyword</item>
+        <item>CREATE</item>
+        <item>TEMP</item>
+        <item>TEMPORARY</item>
+        <item>TRIGGER</item>
+        <item>IF NOT EXISTS</item>
+        <item>BEFORE</item>
+        <item>AFTER</item>
+        <item>INSTEAD OF</item>
+        <item>DELETE</item>
+        <item>INSERT</item>
+        <item>UPDATE</item>
+        <item>OF</item>
+        <item>ON</item>
+        <item>FOR EACH ROW</item>
+        <item>WHEN</item>
+        <item>BEGIN</item>
+        <item>END</item>
+        <item>RAISE</item>
+        <item>IGNORE</item>
+        <item>ROLLBACK</item>
+        <item>ABORT</item>
+        <item>FAIL</item>
+    </string-array>
+    <string-array name="action_keyword_list_create_view">
+        <item>Select Keyword</item>
+        <item>CREATE</item>
+        <item>TEMP</item>
+        <item>TEMPORARY</item>
+        <item>VIEW</item>
+        <item>IF NOT EXISTS</item>
+        <item>AS</item>
+    </string-array>
+    <string-array name="action_keyword_list_database">
+        <item>Select Keyword</item>
+        <item>ATTACH</item>
+        <item>DETACH</item>
+        <item>DATABASE</item>
+        <item>AS</item>
+    </string-array>
+    <string-array name="action_keyword_list_drop">
+        <item>Select Keyword</item>
+        <item>DROP</item>
+        <item>TABLE</item>
+        <item>INDEX</item>
+        <item>VIEW</item>
+        <item>TRIGGER</item>
+        <item>IF EXISTS</item>
+    </string-array>
+    <string-array name="action_keyword_list_create_virtual_table">
+        <item>Select Keyword</item>
+        <item>CREATE VIRTUAL TABLE</item>
+        <item>IF NOT EXISTS</item>
+        <item>USING</item>
+    </string-array>
+    <string-array name="action_keyword_list_miscellaneous">
+        <item>Select Keyword</item>
+        <item>PRAGMA</item>
+        <item>EXPLAIN</item>
+        <item>QUERY PLAN</item>
+        <item>ANALYZE</item>
+        <item>REINDEX</item>
+        <item>VACUUM</item>
+        <!--not in sqlite
+        used for descending only
+        <item>DESC</item>
+        <item>SHOW</item>
+        <item>MODIFY</item>
+        <item>ENUM</item>
+        <item>ANY</item>
+        <item>ROLLUP</item>
+        use concatenation operator || instead
+        <item>CONCAT()</item>
+        <item>DATE_ADD()</item>
+        <item>INTERVAL()</item>
+        <item>DAY()</item>
+        <item>EXTRACT()</item>
+        <item>YEAR()</item>
+        BEGIN is used instead
+        <item>START</item>-->
+    </string-array>
+</resources>

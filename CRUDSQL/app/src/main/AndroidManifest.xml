@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Colin Walters.  All rights reserved.
+  -->
+
+<manifest
+    package="com.crudsql"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:installLocation="preferExternal">
+    <!--Emulator doesn't like preferExternal.  Need to use the following instead when using the
+    emulators-->
+    <!--android:installLocation="auto">-->
+
+    <!--Leave permissions for help text links and rate option.-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
+        <activity
+            android:name="com.crudsql.controller.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.crudsql.controller.HelpActivity"
+            android:label="@string/help"
+            android:parentActivityName="com.crudsql.controller.MainActivity">
+        </activity>
+        <activity
+            android:name="com.crudsql.controller.AboutActivity"
+            android:label="@string/about"
+            android:parentActivityName="com.crudsql.controller.MainActivity">
+        </activity>
+    </application>
+</manifest>

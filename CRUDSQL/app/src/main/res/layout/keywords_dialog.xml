@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Colin Walters.  All rights reserved.
+  -->
+
+<LinearLayout
+    android:id="@+id/keywordsDialogRoot"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/labelTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/view_margin"
+        android:paddingRight="@dimen/view_margin"
+        android:paddingTop="@dimen/view_margin"
+        android:text=""/>
+
+    <Spinner
+        android:id="@+id/spinner1"
+        style="@android:style/Theme.DeviceDefault.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/view_margin"/>
+
+    <TextView
+        android:id="@+id/labelTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/view_margin"
+        android:paddingRight="@dimen/view_margin"
+        android:text=""/>
+
+    <Spinner
+        android:id="@+id/spinner2"
+        style="@android:style/Theme.DeviceDefault.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/view_margin"/>
+
+    <LinearLayout
+        android:id="@+id/buttonsLinearLayout"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/okButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@android:string/ok"/>
+    </LinearLayout>
+
+</LinearLayout>
