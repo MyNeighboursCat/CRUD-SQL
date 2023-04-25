@@ -1,2 +1,2 @@
 # CRUD SQL
- A Java database app to teach SQL.
+ An Android Java database app to teach SQL.
