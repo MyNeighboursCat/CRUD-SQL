@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -31,7 +32,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.window.OnBackInvokedCallback;
+import android.window.OnBackInvokedDispatcher;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -190,6 +194,25 @@ public final class MainActivity extends AppCompatActivity {
             }
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            this.getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_DEFAULT,
+                    new OnBackInvokedCallback() {
+                @Override
+                public void onBackInvoked() {
+                    MainActivity.this.whenBackPressed();
+                }
+            });
+        } else {
+            this.getOnBackPressedDispatcher().addCallback(this,
+                    new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    MainActivity.this.whenBackPressed();
+                }
+            });
+        }
+
         // get saved bundle values
         if (savedInstanceState != null) {
             // don't use 'counter' as variable name because it increases with each
@@ -265,13 +288,6 @@ public final class MainActivity extends AppCompatActivity {
         this.releaseResources();
 
         super.onDestroy();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (this.allowEvents) {
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -1447,6 +1463,9 @@ public final class MainActivity extends AppCompatActivity {
 
     private void clearDatabaseVariables() {
         if (this.sqliteDatabase1 != null) {
+            if (this.sqliteDatabase1.inTransaction()) {
+                this.sqliteDatabase1.endTransaction();
+            }
             this.sqliteDatabase1.close();
             this.sqliteDatabase1 = null;
         }
@@ -1454,6 +1473,12 @@ public final class MainActivity extends AppCompatActivity {
         if (this.crudSQLDatabaseHelper1 != null) {
             this.crudSQLDatabaseHelper1.close();
             this.crudSQLDatabaseHelper1 = null;
+        }
+    }
+
+    private void whenBackPressed() {
+        if (this.allowEvents) {
+            this.finish();
         }
     }
 }
